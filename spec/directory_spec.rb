@@ -5,11 +5,11 @@ describe "student directory to" do
 		allow(self).to receive(:puts).with("The students of my cohort at Makers Academy")
 		show_header
 	end
-	it "has a empty students list" do
+	it "have a empty students list" do
 		expect(student_list).to be_empty
 	end
 
-	it "adds a student to the students list" do
+	it "add a student to the students list" do
 		student = {name: "Jean", cohort: :June}
 		add(student)
 		expect(student_list).to eq [student]
@@ -22,7 +22,7 @@ describe "student directory to" do
 		expect(students_to_s(students)).to eq "Jean, June cohort\nMarco, June cohort"
 	end
 
-	it 'Prints the students to the terminal' do
+	it 'Print the students to the terminal' do
 		student = {name: "Jean", cohort: :June}
 		add(student)
 
@@ -31,17 +31,35 @@ describe "student directory to" do
 		print_students
 	end
 
-	it 'Creates a student hash' do
+	it 'Create a student hash' do
 		expect(student_file("Marco", "June")).to eq ({name: "Marco", cohort: :June})
 	end
 
-	it 'Saves a file with the list' do
+	it 'Saves in a file' do
 		expect(File).to receive(:open).with("students.csv","w")
-		save_students
+		save_students_to_file
 	end
 
-	it 'Loads from a file' do
+	it 'Saves the student list in a file' do
+		expected_list = [{:name => "Marco", :cohort => :June}, {:name => "Jean", :cohort => :May}]
+		load_students
+		save_students_to_file
+		expect(student_list).to eq expected_list
+	end
+
+	it 'Load a file' do
 		expect(File).to receive(:open).with("students.csv","r")
 		load_students
+	end
+
+	it 'Read data from a file' do
+		expected_list = [{:name => "Marco", :cohort => :June}, {:name => "Jean", :cohort => :May}]
+		load_students
+		expect(student_list).to eq expected_list
+	end
+
+	it 'Get and return input from the user' do
+		expect(STDIN).to receive(:gets).and_return("Marco")
+		expect(get_user_input).to eq "Marco"
 	end
 end

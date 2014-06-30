@@ -22,21 +22,32 @@ def student_file(name,cohort)
 	{:name => name, :cohort => cohort.to_sym}
 end
 
-def save_students
+def get_user_input
+	STDIN.gets.chomp
+end
+
+def save_students_to_file
 	File.open("students.csv","w") do|file|
-		student_list.each do |hash|
-		name = hash[:name]
-		cohort = hash[:cohort]
+		arrange_data_to_be_saved_in(file)
+	end
+end
+
+def arrange_data_to_be_saved_in(file)
+	student_list.each do |hash|
+		name, cohort = hash[:name], hash[:cohort]
 		file.puts name + ',' + cohort.to_s
-		end
 	end
 end
 
 def load_students
 	File.open("students.csv","r") do |file|
-		file.readlines.each do |lines|
-			name, cohort = line.split(',')
-			add(student_file(name, cohort))
-			end		
+		arrange_data_from(file)
 	end
+end
+
+def arrange_data_from(file)
+	file.readlines.each do |line|
+		name, cohort = line.split(',')
+		add(student_file(name.capitalize, cohort.capitalize.rstrip))
+	end	
 end
