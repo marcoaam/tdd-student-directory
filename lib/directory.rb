@@ -48,7 +48,7 @@ end
 def arrange_data_from(file)
 	file.readlines.each do |line|
 		name, cohort = line.split(',')
-		add(student_file(name.capitalize, cohort.capitalize.rstrip))
+		add(student_file(name.capitalize, cohort.capitalize.chomp))
 	end	
 end
 
@@ -65,19 +65,14 @@ def print_main_menu
 	puts "Main Menu\n1.- Add Student\n2.-Show the students\n3.-Save student list to a file\n4.-Load student list from a file\n9.- exit"
 end
 
-def looping_interactive_menu
+def interactive_menu
 	print_main_menu
-	menu_selection = get_user_input
-	interactive_menu(menu_selection)
-	print_main_menu
-end
-
-def interactive_menu(selection)
+	selection = get_user_input
 	case selection
 	when "1"
 		add(student_file(get_student_name, get_student_cohort))
 	when "2"
-		print_students(student_list)
+		print_students
 	when "3"
 		save_students_to_file
 	when "4"
@@ -88,3 +83,11 @@ def interactive_menu(selection)
 		puts "try again"
 	end
 end
+
+def student_directory
+	loop do
+		interactive_menu
+	end
+end
+
+student_directory
