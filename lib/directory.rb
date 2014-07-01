@@ -51,3 +51,40 @@ def arrange_data_from(file)
 		add(student_file(name.capitalize, cohort.capitalize.rstrip))
 	end	
 end
+
+def get_student_name
+	puts "Enter the name of the student"
+	get_user_input
+end
+
+def get_student_cohort
+	puts "Enter the month of the cohort"
+	get_user_input
+end
+def print_main_menu
+	puts "Main Menu\n1.- Add Student\n2.-Show the students\n3.-Save student list to a file\n4.-Load student list from a file\n9.- exit"
+end
+
+def looping_interactive_menu
+	print_main_menu
+	menu_selection = get_user_input
+	interactive_menu(menu_selection)
+	print_main_menu
+end
+
+def interactive_menu(selection)
+	case selection
+	when "1"
+		add(student_file(get_student_name, get_student_cohort))
+	when "2"
+		print_students(student_list)
+	when "3"
+		save_students_to_file
+	when "4"
+		load_students
+	when "9"
+		exit
+	else
+		puts "try again"
+	end
+end

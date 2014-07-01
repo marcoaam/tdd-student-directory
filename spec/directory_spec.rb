@@ -2,7 +2,7 @@ require 'directory'
 	
 describe "student directory to" do
 	it "show a header" do
-		allow(self).to receive(:puts).with("The students of my cohort at Makers Academy")
+		expect(self).to receive(:puts).with("The students of my cohort at Makers Academy")
 		show_header
 	end
 	it "have a empty students list" do
@@ -40,26 +40,82 @@ describe "student directory to" do
 		save_students_to_file
 	end
 
-	it 'Saves the student list in a file' do
-		expected_list = [{:name => "Marco", :cohort => :June}, {:name => "Jean", :cohort => :May}]
-		load_students
-		save_students_to_file
-		expect(student_list).to eq expected_list
-	end
+	# it 'Saves the student list in a file' do
+	# 	expected_list = [{:name => "Marco", :cohort => :June}, {:name => "Jean", :cohort => :May}]
+	# 	load_students
+	# 	save_students_to_file
+	# 	expect(student_list).to eq expected_list
+	# end
 
 	it 'Load a file' do
 		expect(File).to receive(:open).with("students.csv","r")
 		load_students
 	end
 
-	it 'Read data from a file' do
-		expected_list = [{:name => "Marco", :cohort => :June}, {:name => "Jean", :cohort => :May}]
-		load_students
-		expect(student_list).to eq expected_list
-	end
+	# it 'Read data from a file' do
+	# 	expected_list = [{:name => "Marco", :cohort => :June}, {:name => "Jean", :cohort => :May}]
+	# 	load_students
+	# 	expect(student_list).to eq expected_list
+	# end
 
 	it 'Get and return input from the user' do
 		expect(STDIN).to receive(:gets).and_return("Marco")
 		expect(get_user_input).to eq "Marco"
+	end
+
+	it 'Get student name' do
+		expect(self).to receive(:puts).with("Enter the name of the student")
+		expect(self).to receive(:get_user_input)
+		get_student_name
+	end
+
+	it 'Get student name' do
+		expect(self).to receive(:puts).with("Enter the month of the cohort")
+		expect(self).to receive(:get_user_input)
+		get_student_cohort
+	end
+
+	it 'Prints interactive menu' do
+		expect(self).to receive(:puts).with("Main Menu\n1.- Add Student\n2.-Show the students\n3.-Save student list to a file\n4.-Load student list from a file\n9.- exit")
+		print_main_menu
+	end
+
+	context 'Have a menu option #' do
+
+		it '1 that adds a student' do
+			allow(self).to receive(:get_user_input).and_return("1")
+			expect(self).to receive(:add)
+			interactive_menu("1")
+		end
+
+		it '2 that shows the list of students' do
+			
+			expect(self).to receive(:print_students)
+			interactive_menu("2")
+		end
+
+		it '3 that saves list of students to a file' do
+			
+			expect(self).to receive(:save_students_to_file)
+			interactive_menu("3")
+		end
+
+		it '4 that loads list of students from a file' do
+			
+			expect(self).to receive(:load_students)
+			interactive_menu("4")
+		end
+
+		it '9 to exit from the menu' do
+			
+			expect(self).to receive(:exit)
+			interactive_menu("9")
+		end
+	end
+
+	it 'brings back the interactive menu if option is different than 9' do
+		expect(self).to receive(:print_main_menu).twice
+		expect(self).to receive(:get_user_input).and_return("5")
+		looping_interactive_menu
 	end
 end
