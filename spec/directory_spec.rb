@@ -42,22 +42,9 @@ describe "student directory to" do
 		save_students_to_file
 	end
 
-	it 'Saves the student list in a file' do
-		expected_list = [{:name => "Marco", :cohort => :June}, {:name => "Jean", :cohort => :May}]
-		load_students
-		save_students_to_file
-		expect(student_list).to eq expected_list
-	end
-
 	it 'Load a file' do
 		expect(File).to receive(:open).with("students.csv","r")
 		load_students
-	end
-
-	it 'Read data from a file' do
-		expected_list = [{:name => "Marco", :cohort => :June}, {:name => "Jean", :cohort => :May}]
-		load_students
-		expect(student_list).to eq expected_list
 	end
 
 	it 'Get and return input from the user' do
