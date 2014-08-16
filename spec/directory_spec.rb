@@ -1,10 +1,12 @@
 require 'directory'
 	
 describe "student directory to" do
+
 	it "show a header" do
 		expect(self).to receive(:puts).with("The students of my cohort at Makers Academy")
 		show_header
 	end
+
 	it "have a empty students list" do
 		expect(student_list).to be_empty
 	end
@@ -40,23 +42,23 @@ describe "student directory to" do
 		save_students_to_file
 	end
 
-	# it 'Saves the student list in a file' do
-	# 	expected_list = [{:name => "Marco", :cohort => :June}, {:name => "Jean", :cohort => :May}]
-	# 	load_students
-	# 	save_students_to_file
-	# 	expect(student_list).to eq expected_list
-	# end
+	it 'Saves the student list in a file' do
+		expected_list = [{:name => "Marco", :cohort => :June}, {:name => "Jean", :cohort => :May}]
+		load_students
+		save_students_to_file
+		expect(student_list).to eq expected_list
+	end
 
 	it 'Load a file' do
 		expect(File).to receive(:open).with("students.csv","r")
 		load_students
 	end
 
-	# it 'Read data from a file' do
-	# 	expected_list = [{:name => "Marco", :cohort => :June}, {:name => "Jean", :cohort => :May}]
-	# 	load_students
-	# 	expect(student_list).to eq expected_list
-	# end
+	it 'Read data from a file' do
+		expected_list = [{:name => "Marco", :cohort => :June}, {:name => "Jean", :cohort => :May}]
+		load_students
+		expect(student_list).to eq expected_list
+	end
 
 	it 'Get and return input from the user' do
 		expect(STDIN).to receive(:gets).and_return("Marco")
@@ -111,5 +113,7 @@ describe "student directory to" do
 			expect(self).to receive(:exit)
 			interactive_menu
 		end
+
 	end
+	
 end

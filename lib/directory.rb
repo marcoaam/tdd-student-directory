@@ -89,5 +89,3 @@ def student_directory
 		interactive_menu
 	end
 end
-
-student_directory
