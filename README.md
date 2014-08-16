@@ -14,3 +14,8 @@ How to run
 	git clone git@github.com:marcoaam/tdd-student-directory.git
 	cd tdd-student-directory
 	ruby student_directory.rb
+
+How to test
+------------
+
+	rspec
